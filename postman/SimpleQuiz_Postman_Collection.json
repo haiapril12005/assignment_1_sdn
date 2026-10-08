@@ -1,0 +1,259 @@
+{
+  "info": {
+    "_postman_id": "f5b89a01-3d44-42b7-a36e-716498822019",
+    "name": "SimpleQuiz - Ass1 SDN302 Collection",
+    "description": "Postman Collection for SDN302 Assignment 1 - SimpleQuiz Quizzes and Questions REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Quizzes",
+      "item": [
+        {
+          "name": "GET /quizzes - Lấy tất cả bài Quiz (populate câu hỏi)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes"]
+            }
+          }
+        },
+        {
+          "name": "POST /quizzes - Tạo mới bài Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"History & Geography Quiz\",\n  \"description\": \"Kiểm tra kiến thức lịch sử và địa lý\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes"]
+            }
+          }
+        },
+        {
+          "name": "GET /quizzes/:quizId - Xem chi tiết Quiz",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}"]
+            }
+          }
+        },
+        {
+          "name": "PUT /quizzes/:quizId - Cập nhật Quiz",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Quiz Title\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /quizzes/:quizId - Xóa bài Quiz",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}"]
+            }
+          }
+        },
+        {
+          "name": "GET /quizzes/:quizId/populate - Lọc câu hỏi chứa từ 'capital' (Yêu cầu 3)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/populate",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "populate"]
+            }
+          }
+        },
+        {
+          "name": "POST /quizzes/:quizId/question - Thêm 1 câu hỏi vào Quiz (Yêu cầu 4)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"What is the capital of Vietnam?\",\n  \"options\": [\"Hanoi\", \"Ho Chi Minh City\", \"Da Nang\", \"Hue\"],\n  \"keywords\": [\"capital\", \"vietnam\"],\n  \"correctAnswerIndex\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/question",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "question"]
+            }
+          }
+        },
+        {
+          "name": "POST /quizzes/:quizId/questions - Thêm nhiều câu hỏi vào Quiz (Yêu cầu 5)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"text\": \"What is the capital of Germany?\",\n    \"options\": [\"Paris\", \"London\", \"Berlin\", \"Madrid\"],\n    \"keywords\": [\"capital\", \"germany\"],\n    \"correctAnswerIndex\": 2\n  },\n  {\n    \"text\": \"Which is the largest ocean?\",\n    \"options\": [\"Atlantic\", \"Pacific\", \"Indian\", \"Arctic\"],\n    \"keywords\": [\"ocean\", \"geography\"],\n    \"correctAnswerIndex\": 1\n  }\n]"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "questions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Questions",
+      "item": [
+        {
+          "name": "GET /questions - Lấy danh sách tất cả câu hỏi",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"]
+            }
+          }
+        },
+        {
+          "name": "POST /questions - Tạo câu hỏi độc lập",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"What is the capital of France?\",\n  \"options\": [\"Paris\", \"London\", \"Berlin\", \"Madrid\"],\n  \"keywords\": [\"capital\", \"france\"],\n  \"correctAnswerIndex\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"]
+            }
+          }
+        },
+        {
+          "name": "GET /questions/:questionId - Xem chi tiết câu hỏi theo ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "{{questionId}}"]
+            }
+          }
+        },
+        {
+          "name": "PUT /questions/:questionId - Cập nhật thông tin câu hỏi",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"What is the capital of France? (Updated)\",\n  \"options\": [\"Paris\", \"London\", \"Berlin\", \"Madrid\"],\n  \"keywords\": [\"capital\", \"france\"],\n  \"correctAnswerIndex\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "{{questionId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /questions/:questionId - Xóa câu hỏi",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "{{questionId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Server Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "status"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "quizId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "questionId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+### ================================================================
+### SimpleQuiz REST API - ĐÚNG 13 ENDPOINTS THEO YÊU CẦU ĐỀ BÀI
+### Base URL: http://localhost:5000 (theo file .env)
+### ================================================================
+
+@baseUrl = http://localhost:5000
+@quizId = 6ac61f4f878ed0258cc840fa
+@questionId = 6ac61f4f878ed0258cc840f7
+
+### ================================================================
+### PHẦN 1: CÁC ENDPOINT DÀNH CHO QUIZZES (8 APIs)
+### ================================================================
+
+### [API 1] GET /quizzes
+### Lấy toàn bộ danh sách quizzes (Sử dụng Mongoose populate để hiển thị đầy đủ thông tin các câu hỏi)
+GET {{baseUrl}}/quizzes
+Content-Type: application/json
+
+### ----------------------------------------------------------------
+
+### [API 2] POST /quizzes
+### Tạo mới một bài Quiz
+POST {{baseUrl}}/quizzes
+Content-Type: application/json
+
+{
+  "title": "World Geography & Capitals",
+  "description": "Test your knowledge of world countries, capitals, and landmarks."
+}
+
+### ----------------------------------------------------------------
+
+### [API 3] GET /quizzes/:quizId
+### Xem chi tiết bài Quiz theo ID (đã populate câu hỏi)
+GET {{baseUrl}}/quizzes/{{quizId}}
+Content-Type: application/json
+
+### ----------------------------------------------------------------
+
+### [API 4] PUT /quizzes/:quizId
+### Cập nhật thông tin tiêu đề / mô tả của bài Quiz
+PUT {{baseUrl}}/quizzes/{{quizId}}
+Content-Type: application/json
+
+{
+  "title": "World Geography & Capitals (Updated Edition)",
+  "description": "Updated description with new challenges and questions."
+}
+
+### ----------------------------------------------------------------
+
+### [API 5] DELETE /quizzes/:quizId
+### Xóa bài Quiz theo quizId
+DELETE {{baseUrl}}/quizzes/{{quizId}}
+Content-Type: application/json
+
+### ----------------------------------------------------------------
+
+### [API 6] GET /quizzes/:quizId/populate
+### [YÊU CẦU 3] Lọc các câu hỏi trong quiz có chứa từ khóa "capital" (trong text hoặc keywords)
+GET {{baseUrl}}/quizzes/{{quizId}}/populate
+Content-Type: application/json
+
+### ----------------------------------------------------------------
+
+### [API 7] POST /quizzes/:quizId/question
+### [YÊU CẦU 4] Tạo 1 câu hỏi mới và tự động thêm vào Quiz
+POST {{baseUrl}}/quizzes/{{quizId}}/question
+Content-Type: application/json
+
+{
+  "text": "What is the capital of France?",
+  "options": [
+    "Paris",
+    "London",
+    "Berlin",
+    "Rome"
+  ],
+  "keywords": [
+    "capital",
+    "france",
+    "europe"
+  ],
+  "correctAnswerIndex": 0
+}
+
+### ----------------------------------------------------------------
+
+### [API 8] POST /quizzes/:quizId/questions
+### [YÊU CẦU 5] Tạo nhiều câu hỏi mới cùng lúc và tự động thêm vào Quiz
+POST {{baseUrl}}/quizzes/{{quizId}}/questions
+Content-Type: application/json
+
+[
+  {
+    "text": "What is the capital of Germany?",
+    "options": [
+      "Munich",
+      "Frankfurt",
+      "Berlin",
+      "Hamburg"
+    ],
+    "keywords": [
+      "capital",
+      "germany",
+      "europe"
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "text": "Which is the largest ocean on Earth?",
+    "options": [
+      "Atlantic Ocean",
+      "Pacific Ocean",
+      "Indian Ocean",
+      "Arctic Ocean"
+    ],
+    "keywords": [
+      "ocean",
+      "geography",
+      "earth"
+    ],
+    "correctAnswerIndex": 1
+  }
+]
+
+### ================================================================
+### PHẦN 2: CÁC ENDPOINT DÀNH CHO QUESTIONS (5 APIs)
+### Hỗ trợ cả /question và /questions
+### ================================================================
+
+### [API 9] GET /question (hoặc /questions)
+### Lấy danh sách tất cả các câu hỏi
+GET {{baseUrl}}/question
+Content-Type: application/json
+
+### ----------------------------------------------------------------
+
+### [API 10] POST /question (hoặc /questions)
+### Tạo mới một câu hỏi độc lập
+POST {{baseUrl}}/question
+Content-Type: application/json
+
+{
+  "text": "What is the capital of Vietnam?",
+  "options": [
+    "Hanoi",
+    "Ho Chi Minh City",
+    "Da Nang",
+    "Hue"
+  ],
+  "keywords": [
+    "capital",
+    "vietnam",
+    "asia"
+  ],
+  "correctAnswerIndex": 0
+}
+
+### ----------------------------------------------------------------
+
+### [API 11] GET /question/:questionId (hoặc /questions/:questionId)
+### Xem chi tiết một câu hỏi theo ID
+GET {{baseUrl}}/question/{{questionId}}
+Content-Type: application/json
+
+### ----------------------------------------------------------------
+
+### [API 12] PUT /question/:questionId (hoặc /questions/:questionId)
+### Cập nhật nội dung câu hỏi
+PUT {{baseUrl}}/question/{{questionId}}
+Content-Type: application/json
+
+{
+  "text": "What is the capital of Vietnam? (Official Capital)",
+  "options": [
+    "Hanoi",
+    "Ho Chi Minh City",
+    "Da Nang",
+    "Can Tho"
+  ],
+  "keywords": [
+    "capital",
+    "vietnam",
+    "geography"
+  ],
+  "correctAnswerIndex": 0
+}
+
+### ----------------------------------------------------------------
+
+### [API 13] DELETE /question/:questionId (hoặc /questions/:questionId)
+### Xóa câu hỏi (tự động gỡ ID câu hỏi khỏi mảng questions của mọi Quiz liên quan)
+DELETE {{baseUrl}}/question/{{questionId}}
+Content-Type: application/json
+
+### ================================================================
+### PHẦN 3: BỘ DỮ LIỆU RAW BODY MẪU ĐỂ POST NHIỀU CÂU HỎI
+### ================================================================
+
+### [MẪU 1] POST /quizzes/:quizId/questions - Thêm 5 câu hỏi Thủ Đô vào Quiz
+POST {{baseUrl}}/quizzes/{{quizId}}/questions
+Content-Type: application/json
+
+[
+  {
+    "text": "What is the capital of Japan?",
+    "options": ["Kyoto", "Osaka", "Tokyo", "Yokohama"],
+    "keywords": ["capital", "japan", "asia"],
+    "correctAnswerIndex": 2
+  },
+  {
+    "text": "What is the capital of Australia?",
+    "options": ["Sydney", "Melbourne", "Brisbane", "Canberra"],
+    "keywords": ["capital", "australia", "oceania"],
+    "correctAnswerIndex": 3
+  },
+  {
+    "text": "What is the capital of the United States?",
+    "options": ["New York", "Washington D.C.", "Los Angeles", "Chicago"],
+    "keywords": ["capital", "usa", "america"],
+    "correctAnswerIndex": 1
+  },
+  {
+    "text": "What is the capital of the United Kingdom?",
+    "options": ["London", "Manchester", "Edinburgh", "Liverpool"],
+    "keywords": ["capital", "uk", "europe"],
+    "correctAnswerIndex": 0
+  },
+  {
+    "text": "What is the capital of Italy?",
+    "options": ["Milan", "Venice", "Rome", "Florence"],
+    "keywords": ["capital", "italy", "europe"],
+    "correctAnswerIndex": 2
+  }
+]
+
+### ----------------------------------------------------------------
+
+### [MẪU 2] POST /quizzes/:quizId/questions - Thêm 5 câu hỏi Khoa Học & Công Nghệ vào Quiz
+POST {{baseUrl}}/quizzes/{{quizId}}/questions
+Content-Type: application/json
+
+[
+  {
+    "text": "What is the largest planet in our solar system?",
+    "options": ["Earth", "Mars", "Jupiter", "Saturn"],
+    "keywords": ["space", "astronomy", "planets"],
+    "correctAnswerIndex": 2
+  },
+  {
+    "text": "What is the chemical symbol for Water?",
+    "options": ["CO2", "H2O", "NaCl", "O2"],
+    "keywords": ["chemistry", "science", "water"],
+    "correctAnswerIndex": 1
+  },
+  {
+    "text": "Which programming language is known as the backbone of web development?",
+    "options": ["Python", "JavaScript", "C++", "Ruby"],
+    "keywords": ["programming", "javascript", "technology"],
+    "correctAnswerIndex": 1
+  },
+  {
+    "text": "What is the speed of light in vacuum approximately?",
+    "options": ["300,000 km/s", "150,000 km/s", "1,000,000 km/s", "30,000 km/s"],
+    "keywords": ["physics", "science", "light"],
+    "correctAnswerIndex": 0
+  },
+  {
+    "text": "What does CPU stand for in computer science?",
+    "options": ["Central Processing Unit", "Central Program Utility", "Computer Power Unit", "Core Processor Utility"],
+    "keywords": ["computer", "hardware", "cpu"],
+    "correctAnswerIndex": 0
+  }
+]
+
+### ----------------------------------------------------------------
+
+### [MẪU 3] POST /question - Tạo từng câu hỏi đơn lẻ
+POST {{baseUrl}}/question
+Content-Type: application/json
+
+{
+  "text": "What is the capital of South Korea?",
+  "options": ["Busan", "Incheon", "Seoul", "Daegu"],
+  "keywords": ["capital", "korea", "asia"],
+  "correctAnswerIndex": 2
+}
